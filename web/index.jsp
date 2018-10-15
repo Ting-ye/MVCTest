@@ -11,6 +11,19 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <form action="demo7" method="post">
+    <%--<input type="text" name="username" />--%>
+    <%--<input type="text" name="age" />--%>
+    <%--<input type="checkbox" name="hover" value="吃饭"/>--%>
+    <%--<input type="checkbox" name="hover" value="睡觉"/>--%>
+    <%--<input type="checkbox" name="hover" value="快活"/>--%>
+    <%--<input type="checkbox" name="hover" value="lol"/>--%>
+      <input type="text" name="peo[0].name" />
+      <input type="text" name="peo[0].age" />
+      <input type="text" name="peo[1].name" />
+      <input type="text" name="peo[1].age" />
+      <input type="submit" value="提交" />
+    <a href="demo8/在控制器中可以随意取名restful传值方式/111">提交</a>
+  </form>
   </body>
 </html>
