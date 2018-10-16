@@ -72,4 +72,10 @@ public class DemoControll {
         p.setName("超出");
         return p;
     }
+    @RequestMapping(value = "demo13",produces = "text/html;charset=utf-8")
+    @ResponseBody
+    public String demo13(){
+        System.out.println("控制器中只要返回值不是void，那么默认return都是跳转 除非加此处RequestMapping备注");
+        return "中文";
+    }
 }

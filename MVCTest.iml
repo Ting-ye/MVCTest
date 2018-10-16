@@ -22,5 +22,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="spring-expression-4.3.9.RELEASE" level="project" />
     <orderEntry type="library" name="jackson-databind-2.7.0-javadoc" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.9.5" level="project" />
   </component>
 </module>
