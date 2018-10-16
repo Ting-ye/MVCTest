@@ -25,5 +25,20 @@
       <input type="submit" value="提交" />
     <a href="demo8/在控制器中可以随意取名restful传值方式/111">提交</a>
   </form>
+
+  <%--可以缺省前面的作用域--%>
+  request:${requestScope.request}<br/>
+  application:${applicationScope.application}<br/>
+  session:${sessionScope.session}<br/>
+  sessionParam:${sessionScope.sessionParam}<br/><hr/>
+  map:${requestScope.map}<br/><hr/>
+  model:${requestScope.model}<br/><hr/>
+  mav:${mav}<br/><hr/>
+  <a href="download?filename=a.txt">下载</a><br/><hr/>
+  <form action="upload" enctype="multipart/form-data" method="post">
+    姓名:<input type="text" name="name"/>
+    上传文件:<input type="file" name="fileName"/>
+    <input type="submit" value="提  交"/>
+  </form>
   </body>
 </html>

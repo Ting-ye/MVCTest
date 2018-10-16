@@ -3,13 +3,27 @@ package com.dy.controller;
 import com.dy.pojo.Demo;
 import com.dy.pojo.DemoLi;
 import com.dy.pojo.People;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.AbstractMultipartHttpServletRequest;
+import org.springframework.web.portlet.ModelAndView;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class DemoControll {
@@ -72,10 +86,54 @@ public class DemoControll {
         p.setName("超出");
         return p;
     }
-    @RequestMapping(value = "demo13",produces = "text/html;charset=utf-8")
-    @ResponseBody
-    public String demo13(){
-        System.out.println("控制器中只要返回值不是void，那么默认return都是跳转 除非加此处RequestMapping备注");
-        return "中文";
+    @RequestMapping("ScopeDemo1")
+    public String ScopeDemo1(HttpServletRequest req, HttpSession sessionParam){
+        req.setAttribute("request","request的值");
+        HttpSession session=req.getSession();
+        session.setAttribute("session","session的值");
+        sessionParam.setAttribute("sessionParam","sessionParam的值");
+        ServletContext application=req.getServletContext();
+        application.setAttribute("application","application的值");
+        return "index";
+    }
+    @RequestMapping("ScopeDemo2")
+    public String ScopeDemo2(Map<String,Object> map){
+        map.put("map","map的值");
+        return "index";
+    }
+    @RequestMapping("ScopeDemo3")
+    public String ScopeDemo3(Model model){
+        model.addAttribute("model","model的值");
+        return "index";
+    }
+    @RequestMapping("ScopeDemo4")
+    public ModelAndView ScopeDemo4(){
+        ModelAndView mav=new ModelAndView("/index.jsp");
+        mav.addObject("mav","mav的值");
+        return mav;
+    }
+    @RequestMapping("download")
+    public void download(String filename,HttpServletRequest req, HttpServletResponse res) throws IOException {
+        //设置响应流中文件恒下载
+        res.setHeader("Content-Disposition","attachment;filename="+filename);
+        //把二进制流加到响应体中
+        ServletOutputStream os = res.getOutputStream();
+        String path=req.getServletContext().getRealPath("files");
+        File file=new File(path,filename);
+        byte[] bytes = FileUtils.readFileToByteArray(file);
+        os.write(bytes);
+        os.flush();
+        os.close();
+    }
+    @RequestMapping("upload")
+    public String upload(String name, MultipartFile fileName) throws IOException {
+//        获取文件的名称 MultipartFile 的对象名 必须和<input type="file">的name属性名相同
+        String file=fileName.getOriginalFilename();
+        String suffix = file.substring(file.lastIndexOf("."));
+//      if(suffix.equalsIgnoreCase(".png")){}
+        String uuid = UUID.randomUUID().toString();
+        FileUtils.copyInputStreamToFile(fileName.getInputStream(),new File("user:/"+uuid+suffix));
+        System.out.println("name"+name);
+        return "index";
     }
 }
