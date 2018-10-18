@@ -13,7 +13,6 @@
     <!--注解驱动-->
     <mvc:annotation-driven></mvc:annotation-driven>
     <!--静态资源-->
-    <mvc:resources mapping="/js/**" location="/js/"></mvc:resources>
     <mvc:resources mapping="/files/**" location="/files/"></mvc:resources>
     <!--自定义视图解析器-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -23,7 +22,7 @@
     <!--MultipartResolver解析器-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!--设置最大传输值1024=1KB-->
-        <property name="maxInMemorySize" value="50"></property>
+        <property name="maxUploadSize" value="102400"></property>
     </bean>
     <!--配置异常解析器-->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
